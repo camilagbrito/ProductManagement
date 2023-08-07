@@ -4,15 +4,26 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Data.Context
 {
-    internal class ProductManagementContext : DbContext
+    public class ProductManagementContext : DbContext
     {
-        public ProductManagementContext(DbContextOptions options) : base(options) {
-        
-
-        }
+        public ProductManagementContext(DbContextOptions options) : base(options) {}
 
         public DbSet<Product> Products { get; set; }
         public DbSet<Provider> Providers { get; set; }
         public DbSet<Address> Addresses { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            foreach (var property in modelBuilder.Model.GetEntityTypes()
+                .SelectMany(x => x.GetProperties()
+                .Where(x => x.ClrType == typeof(string))))
+                property.SetColumnType("varchar(100)"); 
+
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ProductManagementContext).Assembly);
+
+            foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(x => x.GetForeignKeys())) relationship.DeleteBehavior = DeleteBehavior.ClientSetNull;
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

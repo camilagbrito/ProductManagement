@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Data.Repository
 {
-    public class ProductRepository : Repository<Product>, IProductsRepository
+    public class ProductRepository : Repository<Product>, IProductRepository
     {
         public ProductRepository(ProductManagementContext db) : base(db){}
 

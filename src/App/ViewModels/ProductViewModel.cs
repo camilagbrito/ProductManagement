@@ -1,9 +1,11 @@
 ﻿using Business.Models;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace App.ViewModels
 {
+ 
     public class ProductViewModel
     {
         [Key]
@@ -25,7 +27,7 @@ namespace App.ViewModels
 
         public IFormFile Image { get; set; }
 
-        [DisplayName("Imagem")]
+        [DisplayName("Imagem do Produto")]
         public string ImageUpload { get; set; }
 
         [DisplayName("Valor")]
@@ -38,7 +40,9 @@ namespace App.ViewModels
 
         [DisplayName("Ativo?")]
         public bool IsActive { get; set; }
+   
         public ProviderViewModel Provider { get; set; }
+
         public IEnumerable<ProviderViewModel> Providers { get; set; }
     }
 }

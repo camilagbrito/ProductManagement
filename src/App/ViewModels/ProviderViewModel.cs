@@ -1,9 +1,10 @@
 ﻿using Business.Models;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace App.ViewModels
 {
+    [DisplayName("Fornecedor")]
     public class ProviderViewModel
     {
         [Key]
@@ -21,12 +22,13 @@ namespace App.ViewModels
 
         [DisplayName("Tipo")]
         public ProviderType Type { get; set; }
-
+        
         [DisplayName("Endereço")]
         public AddressViewModel Address { get; set; }
 
         [DisplayName("Ativo?")]
         public bool IsActive { get; set; }
+
         [DisplayName("Produtos")]
         public IEnumerable<ProductViewModel> Products { get; set; }
     }

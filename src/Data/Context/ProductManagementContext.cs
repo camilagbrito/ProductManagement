@@ -6,7 +6,10 @@ namespace Data.Context
 {
     public class ProductManagementContext : DbContext
     {
-        public ProductManagementContext(DbContextOptions options) : base(options) {}
+        public ProductManagementContext(DbContextOptions options) : base(options) {
+            ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            ChangeTracker.AutoDetectChangesEnabled = false;
+        }
 
         public DbSet<Product> Products { get; set; }
         public DbSet<Provider> Providers { get; set; }

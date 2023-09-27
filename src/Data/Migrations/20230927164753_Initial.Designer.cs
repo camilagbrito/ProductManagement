@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(ProductManagementContext))]
-    [Migration("20230807123807_Initial")]
+    [Migration("20230927164753_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,9 +46,6 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(50)");
 
-                    b.Property<Guid>("ProviderId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("State")
                         .IsRequired()
                         .HasColumnType("varchar(50)");
@@ -57,13 +54,16 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(200)");
 
+                    b.Property<Guid>("SupplierId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("ZipCode")
                         .IsRequired()
                         .HasColumnType("varchar(8)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProviderId")
+                    b.HasIndex("SupplierId")
                         .IsUnique();
 
                     b.ToTable("Addresses", (string)null);
@@ -93,20 +93,20 @@ namespace Data.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<Guid>("ProviderId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("SupplierId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("ProviderId");
+                    b.HasIndex("SupplierId");
 
                     b.ToTable("Products", (string)null);
                 });
 
-            modelBuilder.Entity("Business.Models.Provider", b =>
+            modelBuilder.Entity("Business.Models.Supplier", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -128,30 +128,30 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Providers", (string)null);
+                    b.ToTable("Suppliers", (string)null);
                 });
 
             modelBuilder.Entity("Business.Models.Address", b =>
                 {
-                    b.HasOne("Business.Models.Provider", "Provider")
+                    b.HasOne("Business.Models.Supplier", "Supplier")
                         .WithOne("Address")
-                        .HasForeignKey("Business.Models.Address", "ProviderId")
+                        .HasForeignKey("Business.Models.Address", "SupplierId")
                         .IsRequired();
 
-                    b.Navigation("Provider");
+                    b.Navigation("Supplier");
                 });
 
             modelBuilder.Entity("Business.Models.Product", b =>
                 {
-                    b.HasOne("Business.Models.Provider", "Provider")
+                    b.HasOne("Business.Models.Supplier", "Supplier")
                         .WithMany("Products")
-                        .HasForeignKey("ProviderId")
+                        .HasForeignKey("SupplierId")
                         .IsRequired();
 
-                    b.Navigation("Provider");
+                    b.Navigation("Supplier");
                 });
 
-            modelBuilder.Entity("Business.Models.Provider", b =>
+            modelBuilder.Entity("Business.Models.Supplier", b =>
                 {
                     b.Navigation("Address");
 

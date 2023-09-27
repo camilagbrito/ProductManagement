@@ -43,6 +43,6 @@ namespace App.ViewModels
         public string State { get; set; }
 
         [HiddenInput]
-        public Guid ProviderId { get; set; }
+        public Guid SupplierId { get; set; }
     }
 }

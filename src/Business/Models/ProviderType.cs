@@ -1,6 +1,6 @@
 ﻿namespace Business.Models
 {
-    public enum ProviderType
+    public enum SupplierType
     {
         Company = 1,
         Individual = 2

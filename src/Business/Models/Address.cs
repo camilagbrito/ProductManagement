@@ -6,7 +6,7 @@ namespace Business.Models
 
     {
         
-        public Guid ProviderId { get; set; }
+        public Guid SupplierId { get; set; }
 
         public string Street { get; set; }
 
@@ -22,6 +22,6 @@ namespace Business.Models
 
         public string State { get; set; }
 
-        public Provider Provider { get; set; }
+        public Supplier Supplier { get; set; }
     }
 }

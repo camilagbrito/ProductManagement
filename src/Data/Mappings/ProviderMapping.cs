@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Data.Mappings
 {
-    internal class ProviderMapping : IEntityTypeConfiguration<Provider>
+    internal class ProviderMapping : IEntityTypeConfiguration<Supplier>
     {
-        public void Configure(EntityTypeBuilder<Provider> builder)
+        public void Configure(EntityTypeBuilder<Supplier> builder)
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Name)
@@ -16,17 +16,17 @@ namespace Data.Mappings
                .IsRequired()
                .HasColumnType("varchar(14)");
 
-            //1:1 => Provider : Address
+            //1:1 => Supplier : Address
             builder.HasOne(x => x.Address)
-                .WithOne(x => x.Provider);
+                .WithOne(x => x.Supplier);
 
-            //1:N => Provider: Products
+            //1:N => Supplier: Products
 
             builder.HasMany(x => x.Products)
-                .WithOne(x => x.Provider)
-                .HasForeignKey(x => x.ProviderId);
+                .WithOne(x => x.Supplier)
+                .HasForeignKey(x => x.SupplierId);
 
-            builder.ToTable("Providers");
+            builder.ToTable("Suppliers");
         }
     }
 }

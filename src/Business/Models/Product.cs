@@ -3,7 +3,7 @@ namespace Business.Models
 {
     public class Product: Entity
     {
-        public Guid ProviderId { get; set; }
+        public Guid SupplierId { get; set; }
 
         public string Name { get; set; }
         public string Description { get; set; }
@@ -11,7 +11,7 @@ namespace Business.Models
         public decimal Price{ get; set; }
         public DateTime RegistrationDate { get; set; }
         public bool IsActive { get; set; }
-        public Provider Provider { get; set; }
+        public Supplier Supplier { get; set; }
 
     }
 }

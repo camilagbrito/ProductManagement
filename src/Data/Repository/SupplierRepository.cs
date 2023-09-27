@@ -8,20 +8,20 @@ using System.Linq;
 
 namespace Data.Repository
 {
-    public class ProviderRepository : Repository<Provider>, IProviderRepository
+    public class SupplierRepository : Repository<Supplier>, ISupplierRepository
     {
-        public ProviderRepository(ProductManagementContext db) : base(db){}
+        public SupplierRepository(ProductManagementContext db) : base(db){}
 
-        public async Task<Provider> GetAddressProvider(Guid id)
+        public async Task<Supplier> GetAddressSupplier(Guid id)
         {
-            return await Db.Providers.AsNoTracking()
+            return await Db.Suppliers.AsNoTracking()
                 .Include(x => x.Address).
                 FirstOrDefaultAsync(x => x.Id == id);  
         }
 
-        public async Task<Provider> GetAddressProductProvider(Guid id)
+        public async Task<Supplier> GetAddressProductSupplier(Guid id)
         {
-            return await Db.Providers.AsNoTracking()
+            return await Db.Suppliers.AsNoTracking()
                  .Include(x => x.Products)
                  .Include(x => x.Address)
                  .FirstOrDefaultAsync(x => x.Id == id);

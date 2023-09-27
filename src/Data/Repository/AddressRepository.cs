@@ -10,10 +10,10 @@ namespace Data.Repository
     {
         public AddressRepository(ProductManagementContext db) : base(db){}
 
-        public async Task<Address> GetAddressByProvider(Guid providerId)
+        public async Task<Address> GetAddressBySupplier(Guid supplierId)
         {
             return await Db.Addresses.AsNoTracking()
-                .FirstOrDefaultAsync(x => x.ProviderId == providerId);
+                .FirstOrDefaultAsync(x => x.SupplierId == supplierId);
         }
     }
 }

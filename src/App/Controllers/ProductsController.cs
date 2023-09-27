@@ -10,19 +10,19 @@ namespace App.Controllers
     public class ProductsController : BaseController
     {
         private readonly IProductRepository _productRepository;
-        private readonly IProviderRepository _providerRepository;
+        private readonly ISupplierRepository _supplierRepository;
         private readonly IMapper _mapper;
 
-        public ProductsController(IProductRepository productRepository, IProviderRepository providerRepository, IMapper mapper)
+        public ProductsController(IProductRepository productRepository, ISupplierRepository supplierRepository, IMapper mapper)
         {
             _productRepository = productRepository;
-            _providerRepository = providerRepository;
+            _supplierRepository = supplierRepository;
             _mapper = mapper;
         }
 
         public async Task<IActionResult> Index()
         {
-            return View(_mapper.Map<IEnumerable<ProductViewModel>>(await _productRepository.GetProductsAndProviders()));
+            return View(_mapper.Map<IEnumerable<ProductViewModel>>(await _productRepository.GetProductsAndSuppliers()));
         }
 
         public async Task<IActionResult> Details(Guid id)
@@ -40,7 +40,7 @@ namespace App.Controllers
 
         public async Task<IActionResult> Create()
         {
-            var productViewModel = await SeedProviders(new ProductViewModel());
+            var productViewModel = await SeedSuppliers(new ProductViewModel());
             return View(productViewModel);
         }
 
@@ -48,7 +48,7 @@ namespace App.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ProductViewModel productViewModel)
         {
-            productViewModel = await SeedProviders(productViewModel);
+            productViewModel = await SeedSuppliers(productViewModel);
 
             if (!ModelState.IsValid) return View(productViewModel);
 
@@ -86,7 +86,7 @@ namespace App.Controllers
 
             var productUpdate = await GetProduct(id);
 
-            productViewModel.Provider = productUpdate.Provider;
+            productViewModel.Supplier = productUpdate.Supplier;
             productViewModel.Image = productUpdate.Image;
 
             if (!ModelState.IsValid) return View(productViewModel);
@@ -137,22 +137,23 @@ namespace App.Controllers
             {
                 return NotFound();
             }
-
+            DeleteFile(product.Image);
             await _productRepository.Delete(id);
+
 
             return RedirectToAction(nameof(Index));
         }
 
         private async Task<ProductViewModel> GetProduct (Guid id)
         {
-            var product = _mapper.Map<ProductViewModel>(await _productRepository.GetProductandProvider(id));
-            product.Providers = _mapper.Map<IEnumerable<ProviderViewModel>>(await _providerRepository.GetAll());
+            var product = _mapper.Map<ProductViewModel>(await _productRepository.GetProductAndSupplier(id));
+            product.Suppliers = _mapper.Map<IEnumerable<SupplierViewModel>>(await _supplierRepository.GetAll());
             return product;
         }
 
-        private async Task<ProductViewModel> SeedProviders(ProductViewModel product)
+        private async Task<ProductViewModel> SeedSuppliers(ProductViewModel product)
         {
-            product.Providers = _mapper.Map<IEnumerable<ProviderViewModel>>(await _providerRepository.GetAll()); ;
+            product.Suppliers = _mapper.Map<IEnumerable<SupplierViewModel>>(await _supplierRepository.GetAll()); ;
             return product;
         }
 

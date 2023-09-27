@@ -13,7 +13,7 @@ namespace App.ViewModels
 
         [DisplayName("Fornecedor")]
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
-        public Guid ProviderId { get; set; }
+        public Guid SupplierId { get; set; }
 
         [DisplayName("Nome")]
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
@@ -42,8 +42,8 @@ namespace App.ViewModels
         [DisplayName("Ativo?")]
         public bool IsActive { get; set; }
    
-        public ProviderViewModel Provider { get; set; }
+        public SupplierViewModel Supplier { get; set; }
 
-        public IEnumerable<ProviderViewModel> Providers { get; set; }
+        public IEnumerable<SupplierViewModel> Suppliers{ get; set; }
     }
 }

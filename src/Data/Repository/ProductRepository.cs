@@ -14,21 +14,21 @@ namespace Data.Repository
     {
         public ProductRepository(ProductManagementContext db) : base(db){}
 
-        public async Task<Product> GetProductandProvider(Guid id)
+        public async Task<Product> GetProductAndSupplier(Guid id)
         {
-            return await Db.Products.AsNoTracking().Include(x => x.Provider)
+            return await Db.Products.AsNoTracking().Include(x => x.Supplier)
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<IEnumerable<Product>> GetProductsAndProviders()
+        public async Task<IEnumerable<Product>> GetProductsAndSuppliers()
         {
-            return await Db.Products.AsNoTracking().Include(x => x.Provider)
+            return await Db.Products.AsNoTracking().Include(x => x.Supplier)
                 .OrderBy(x => x.Name).ToListAsync();
         }
 
-        public async Task<IEnumerable<Product>> GetProductsByProvider(Guid providerId)
+        public async Task<IEnumerable<Product>> GetProductsBySupplier(Guid supplierId)
         {
-            return await Search(x => x.ProviderId == providerId);
+            return await Search(x => x.SupplierId == supplierId);
         }
     }
 }

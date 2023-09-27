@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 namespace App.ViewModels
 {
     [DisplayName("Fornecedor")]
-    public class ProviderViewModel
+    public class SupplierViewModel
     {
         [Key]
         public Guid Id {  get; set; }
@@ -21,7 +21,7 @@ namespace App.ViewModels
         public string IdentityCard { get; set; }
 
         [DisplayName("Tipo")]
-        public ProviderType Type { get; set; }
+        public SupplierType Type { get; set; }
         
         [DisplayName("Endereço")]
         public AddressViewModel Address { get; set; }

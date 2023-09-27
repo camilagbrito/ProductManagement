@@ -9,7 +9,7 @@ namespace App.AutoMapper
        
         public AutoMapperConfig()
         {
-            CreateMap<Provider, ProviderViewModel>().ReverseMap();
+            CreateMap<Supplier, SupplierViewModel>().ReverseMap();
             CreateMap<Address, AddressViewModel>().ReverseMap();
             CreateMap<Product, ProductViewModel>().ReverseMap();
         }

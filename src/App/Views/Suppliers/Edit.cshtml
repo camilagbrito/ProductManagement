@@ -1,0 +1,55 @@
+﻿@model App.ViewModels.SupplierViewModel
+
+@{
+    ViewData["Title"] = "Editar Fornecedor";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<hr />
+
+<form asp-action="Edit">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Id" />
+
+    <div class="row">
+
+        <div class="form-group col-md-6">
+            <label asp-for="Name" class="control-label"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+
+            <label asp-for="IdentityCard" class="control-label"></label>
+            <input asp-for="IdentityCard" class="form-control" />
+            <span asp-validation-for="IdentityCard" class="text-danger"></span>
+        </div>
+
+        <div class="form-group col-md-6">
+            <label asp-for="Type"></label>
+            <div>
+                <input type="radio" value="1" asp-for="Type" checked="@((int)Model.Type == 1)" /> Pessoa jurídica<br />
+                <input type="radio" value="2" asp-for="Type" checked="@((int)Model.Type == 2)" /> Pessoa física<br />
+            </div>
+            <div>
+                &nbsp;
+            </div>
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Salvar" class="btn btn-primary" />
+    </div>
+</form>
+<div>
+    <partial name="_DetailsAddress"/>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

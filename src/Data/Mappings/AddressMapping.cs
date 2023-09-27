@@ -22,7 +22,6 @@ namespace Data.Mappings
                .HasColumnType("varchar(8)");
 
             builder.Property(x => x.AddressSupplement)
-               .IsRequired()
                .HasColumnType("varchar(250)");
 
             builder.Property(x => x.District)

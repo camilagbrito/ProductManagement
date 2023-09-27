@@ -43,11 +43,13 @@ namespace Data.Repository
         public virtual async Task Update(TEntity entity)
         {
             DbSet.Update(entity);
+            await SaveChanges();
         }
 
         public virtual async Task Delete(Guid id)
         {
             DbSet.Remove(new TEntity { Id = id });
+            await SaveChanges();
             //DbSet.Remove(await DbSet.FindAsync(id));
         }
 

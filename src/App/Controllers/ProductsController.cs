@@ -111,8 +111,6 @@ namespace App.Controllers
 
             await _productRepository.Update(_mapper.Map<Product>(productUpdate));
 
-            await _productRepository.SaveChanges();
-
             return RedirectToAction(nameof(Index));
            
         }

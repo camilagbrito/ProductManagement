@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using App.Extensions;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 
@@ -30,6 +31,7 @@ namespace App.ViewModels
         public IFormFile ImageUpload { get; set; }
 
         [DisplayName("Valor")]
+        [Currency]
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public decimal Price { get; set; }
 

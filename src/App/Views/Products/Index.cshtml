@@ -43,7 +43,7 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-               @Html.DisplayFor(modelItem => item.Provider.IdentityCard)
+               @Html.DisplayFor(modelItem => item.Provider.Name)
             </td>
            
             <td>
@@ -53,11 +53,11 @@
                 @Html.DisplayFor(modelItem => item.IsActive)
             </td>
          
-            <td>
+            <td class="text-end">
                
-                <a asp-action="Details" asp-route-id="@item.Id"><span class="fa fa-search"></span></a><br>
-                    <a asp-action="Edit" asp-route-id="@item.Id"><span class="fa fa-pencil-alt"></span></a><br>
-                <a asp-action="Delete" asp-route-id="@item.Id"><span class="fa fa-trash-alt"></span></a>
+                <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id"><span class="fa fa-search"></span></a>
+                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id"><span class="fa fa-pencil-alt"></span></a>
+                <a  class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id"><span class="fa fa-trash-alt"></span></a>
             </td>
         </tr>
 }

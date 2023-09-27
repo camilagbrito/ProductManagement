@@ -101,6 +101,7 @@ namespace App.Controllers
                 }
 
                 productUpdate.Image = imgPrefix + productViewModel.ImageUpload.FileName;
+                DeleteFile(productViewModel.Image);
             }
 
             productUpdate.Name = productViewModel.Name;
@@ -109,6 +110,8 @@ namespace App.Controllers
             productUpdate.IsActive = productViewModel.IsActive;
 
             await _productRepository.Update(_mapper.Map<Product>(productUpdate));
+
+            await _productRepository.SaveChanges();
 
             return RedirectToAction(nameof(Index));
            
@@ -173,6 +176,17 @@ namespace App.Controllers
                 await file.CopyToAsync(stream);
             }
             return true;
-        } 
+        }
+
+        private static void DeleteFile(string file)
+        {
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", file);
+
+            if (System.IO.File.Exists(path))
+            {
+               System.IO.File.Delete(path);
+            }
+        }
     }
 }
+

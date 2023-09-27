@@ -5,7 +5,7 @@ namespace Business.Interfaces
 {
    public interface IProviderRepository: IRepository<Provider>
     {
-        Task<Provider> GetAdressProvider(Guid id);
-        Task<Provider> GetAdressProductProvider(Guid id);
+        Task<Provider> GetAddressProvider(Guid id);
+        Task<Provider> GetAddressProductProvider(Guid id);
     }
 }

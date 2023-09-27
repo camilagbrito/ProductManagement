@@ -114,12 +114,12 @@ namespace App.Controllers
 
         private async Task<ProviderViewModel> GetProviderAddress(Guid id)
         {
-            return _mapper.Map<ProviderViewModel>(await _providerRepository.GetAdressProvider(id));
+            return _mapper.Map<ProviderViewModel>(await _providerRepository.GetAddressProvider(id));
         }
 
         private async Task<ProviderViewModel> GetAddressProductProvider(Guid id)
         {
-            return _mapper.Map<ProviderViewModel>(await _providerRepository.GetAdressProductProvider(id));
+            return _mapper.Map<ProviderViewModel>(await _providerRepository.GetAddressProductProvider(id));
         }
     }
 }

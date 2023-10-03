@@ -46,7 +46,7 @@
         <a class="btn btn-info" asp-action="Index">Voltar</a>
     </div>
 </form>
-<div>
+<div id="AddressTarget">
     <partial name="_DetailsAddress"/>
 </div>
 <hr/>
@@ -55,8 +55,24 @@
     <partial name="../Products/_ProductList" model="@Model.Products"/>
 </div>
 
+<div id="myModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id="myModalContent"></div>
+        </div>
+    </div>
+</div>
+
+
+
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+
+    <script>
+        $(document).ready(function(){
+            SetModal();
+        });
+    </script>
 }

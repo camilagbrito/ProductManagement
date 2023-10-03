@@ -11,11 +11,13 @@ namespace App.Controllers
     public class SuppliersController : BaseController
     {
         private readonly ISupplierRepository _supplierRepository;
+        private readonly IAddressRepository _addressRepository;
         private readonly IMapper _mapper;
 
-        public SuppliersController(ISupplierRepository supplierRepository, IMapper mapper)
+        public SuppliersController(ISupplierRepository supplierRepository, IAddressRepository addressRepository, IMapper mapper)
         {
             _supplierRepository = supplierRepository;
+            _addressRepository = addressRepository;
             _mapper = mapper; 
         }
 
@@ -112,6 +114,31 @@ namespace App.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        public async Task<IActionResult> UpdateAddress(Guid id)
+        {
+            var supplier = await GetSupplierAddress(id);
+
+            if(supplier == null)
+            {
+                return NotFound();
+            }
+
+            return PartialView("_UpdateAddress", new SupplierViewModel { Address = supplier.Address });
+        }
+
+        /*[HttpPost]
+       [ValidateAntiForgeryToken]
+      public async Task<IActionResult> UpdateAddress(SupplierViewModel supplierViewModel)
+       {
+           if (!ModelState.IsValid) return PartialView("_UpdateAddress",supplierViewModel);
+
+           await _supplierRepository.Update(_mapper.Map<Supplier>(supplierViewModel.Address));
+
+           return
+
+       }*/
+
 
         private async Task<SupplierViewModel> GetSupplierAddress(Guid id)
         {

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Data.Mappings
 {
-    internal class ProviderMapping : IEntityTypeConfiguration<Supplier>
+    internal class SupplierMapping : IEntityTypeConfiguration<Supplier>
     {
         public void Configure(EntityTypeBuilder<Supplier> builder)
         {

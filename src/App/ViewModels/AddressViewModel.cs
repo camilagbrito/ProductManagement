@@ -22,22 +22,22 @@ namespace App.ViewModels
         [DisplayName("Complemento")]
         public string AddressSupplement { get; set; }
 
-        [DisplayName("Cep")]
+        [DisplayName("Código Postal")]
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
-        [StringLength(8, ErrorMessage = " O campo {0} precisa ter {1} caracteres", MinimumLength = 8)]
+        [StringLength(8, ErrorMessage = " O campo {0} precisa ter {2} caracteres", MinimumLength = 7)]
         public string ZipCode { get; set; }
 
-        [DisplayName("Bairro")]
+        [DisplayName("Localidade")]
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         [StringLength(100, ErrorMessage = " O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 2)]
         public string District { get; set; }
 
-        [DisplayName("Cidade")]
+        [DisplayName("Concelho")]
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         [StringLength(100, ErrorMessage = " O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 2)]
         public string City { get; set; }
 
-        [DisplayName("Estado")]
+        [DisplayName("Distrito")]
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         [StringLength(50, ErrorMessage = " O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 2)]
         public string State { get; set; }

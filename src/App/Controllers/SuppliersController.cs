@@ -18,19 +18,19 @@ namespace App.Controllers
         {
             _supplierRepository = supplierRepository;
             _addressRepository = addressRepository;
-            _mapper = mapper; 
+            _mapper = mapper;
         }
 
         public async Task<IActionResult> Index()
         {
-              return View(_mapper.Map<IEnumerable<SupplierViewModel>> (await _supplierRepository.GetAll()));
+            return View(_mapper.Map<IEnumerable<SupplierViewModel>>(await _supplierRepository.GetAll()));
         }
 
         public async Task<IActionResult> Details(Guid id)
         {
 
             var supplierViewModel = await GetSupplierAddress(id);
-                
+
             if (supplierViewModel == null)
             {
                 return NotFound();
@@ -44,7 +44,7 @@ namespace App.Controllers
             return View();
         }
 
-       
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(SupplierViewModel supplierViewModel)
@@ -70,7 +70,7 @@ namespace App.Controllers
             return View(supplierViewModel);
         }
 
-      
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, SupplierViewModel supplierViewModel)
@@ -84,13 +84,13 @@ namespace App.Controllers
             await _supplierRepository.Update(supplier);
 
             return RedirectToAction(nameof(Index));
-             
+
         }
 
         public async Task<IActionResult> Delete(Guid id)
         {
-            var supplierViewModel = await GetSupplierAddress(id); 
-            
+            var supplierViewModel = await GetSupplierAddress(id);
+
             if (supplierViewModel == null)
             {
                 return NotFound();
@@ -115,7 +115,7 @@ namespace App.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> UpdateAddress(Guid id)
+        public async Task<IActionResult> GetAddress(Guid id)
         {
             var supplier = await GetSupplierAddress(id);
 
@@ -124,21 +124,37 @@ namespace App.Controllers
                 return NotFound();
             }
 
+            return PartialView("_DetailsAddress", supplier);
+        }
+
+        public async Task<IActionResult> UpdateAddress(Guid id)
+        {
+            var supplier = await GetSupplierAddress(id);
+
+            if (supplier == null)
+            {
+                return NotFound();
+            }
+
             return PartialView("_UpdateAddress", new SupplierViewModel { Address = supplier.Address });
         }
 
-        /*[HttpPost]
-       [ValidateAntiForgeryToken]
-      public async Task<IActionResult> UpdateAddress(SupplierViewModel supplierViewModel)
-       {
-           if (!ModelState.IsValid) return PartialView("_UpdateAddress",supplierViewModel);
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateAddress(SupplierViewModel supplierViewModel)
+        {
+            ModelState.Remove("Name");
+            ModelState.Remove("IdentityCard");
 
-           await _supplierRepository.Update(_mapper.Map<Supplier>(supplierViewModel.Address));
+            if (!ModelState.IsValid) return PartialView("_UpdateAddress", supplierViewModel);
 
-           return
+            await _addressRepository.Update(_mapper.Map<Address>(supplierViewModel.Address));
 
-       }*/
+            var url = Url.Action("GetAddress", "Suppliers", new { id = supplierViewModel.Address.SupplierId});
 
+            return Json(new { success = true, url });
+
+        }
 
         private async Task<SupplierViewModel> GetSupplierAddress(Guid id)
         {

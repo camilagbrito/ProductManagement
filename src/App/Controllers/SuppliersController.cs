@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace App.Controllers
 {
-
+    [Route("admin-suppliers")]
     public class SuppliersController : BaseController
     {
         private readonly ISupplierRepository _supplierRepository;
@@ -21,11 +21,14 @@ namespace App.Controllers
             _mapper = mapper;
         }
 
+        [Route("suppliers-list")]
+
         public async Task<IActionResult> Index()
         {
             return View(_mapper.Map<IEnumerable<SupplierViewModel>>(await _supplierRepository.GetAll()));
         }
 
+        [Route("supplier-details/{id:guid}")]
         public async Task<IActionResult> Details(Guid id)
         {
 
@@ -39,12 +42,13 @@ namespace App.Controllers
             return View(supplierViewModel);
         }
 
+        [Route("new-supplier")]
         public IActionResult Create()
         {
             return View();
         }
 
-
+        [Route("new-supplier")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(SupplierViewModel supplierViewModel)
@@ -57,6 +61,7 @@ namespace App.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Route("edit-supplier/{id:guid}")]
         public async Task<IActionResult> Edit(Guid id)
         {
 
@@ -70,7 +75,7 @@ namespace App.Controllers
             return View(supplierViewModel);
         }
 
-
+        [Route("edit-supplier/{id:guid}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, SupplierViewModel supplierViewModel)
@@ -87,6 +92,7 @@ namespace App.Controllers
 
         }
 
+        [Route("delete-supplier/{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
             var supplierViewModel = await GetSupplierAddress(id);
@@ -99,7 +105,7 @@ namespace App.Controllers
             return View(supplierViewModel);
         }
 
-
+        [Route("delete-supplier/{id:guid}")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
@@ -115,6 +121,7 @@ namespace App.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Route("get-supplier-address/{id:guid}")]
         public async Task<IActionResult> GetAddress(Guid id)
         {
             var supplier = await GetSupplierAddress(id);
@@ -127,6 +134,7 @@ namespace App.Controllers
             return PartialView("_DetailsAddress", supplier);
         }
 
+        [Route("update-supplier-address/{id:guid}")]
         public async Task<IActionResult> UpdateAddress(Guid id)
         {
             var supplier = await GetSupplierAddress(id);
@@ -139,6 +147,7 @@ namespace App.Controllers
             return PartialView("_UpdateAddress", new SupplierViewModel { Address = supplier.Address });
         }
 
+        [Route("update-supplier-address/{id:guid}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateAddress(SupplierViewModel supplierViewModel)

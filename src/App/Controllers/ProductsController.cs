@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace App.Controllers
 {
+    [Route("admin-products")]
     public class ProductsController : BaseController
     {
         private readonly IProductRepository _productRepository;
@@ -19,11 +20,13 @@ namespace App.Controllers
             _mapper = mapper;
         }
 
+        [Route("products-list")]
         public async Task<IActionResult> Index()
         {
             return View(_mapper.Map<IEnumerable<ProductViewModel>>(await _productRepository.GetProductsAndSuppliers()));
         }
 
+        [Route("product-details/{id:guid}")]
         public async Task<IActionResult> Details(Guid id)
         {
 
@@ -37,12 +40,14 @@ namespace App.Controllers
             return View(productViewModel);
         }
 
+        [Route("new-product")]
         public async Task<IActionResult> Create()
         {
             var productViewModel = await SeedSuppliers(new ProductViewModel());
             return View(productViewModel);
         }
 
+        [Route("new-product")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ProductViewModel productViewModel)
@@ -65,6 +70,7 @@ namespace App.Controllers
             return RedirectToAction("Index");
         }
 
+        [Route("edit-product/{id:guid}")]
         public async Task<IActionResult> Edit(Guid id)
         {
            
@@ -77,6 +83,7 @@ namespace App.Controllers
             return View(productViewModel);
         }
 
+        [Route("edit-product/{id:guid}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, ProductViewModel productViewModel)
@@ -114,6 +121,7 @@ namespace App.Controllers
            
         }
 
+        [Route("delete-product/{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
             var product = await GetProduct(id);
@@ -126,6 +134,7 @@ namespace App.Controllers
             return View(product);
         }
 
+        [Route("delete-product/{id:guid}")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)

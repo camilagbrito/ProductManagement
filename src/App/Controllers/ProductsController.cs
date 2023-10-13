@@ -3,7 +3,6 @@ using AutoMapper;
 using Business.Interfaces;
 using Business.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
 
 namespace App.Controllers
 {

@@ -59,6 +59,12 @@ namespace Business.Services
                 return;
             }
 
+            var address = await _addressRepository.GetAddressBySupplier(id);
+            if(address != null)
+            {
+                await _addressRepository.Delete(address.Id);
+            }
+
             await _supplierRepository.Delete(id);
 
         }

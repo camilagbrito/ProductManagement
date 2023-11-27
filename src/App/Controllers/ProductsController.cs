@@ -11,11 +11,14 @@ namespace App.Controllers
     {
         private readonly IProductRepository _productRepository;
         private readonly ISupplierRepository _supplierRepository;
+        private readonly IProductService _productService;
         private readonly IMapper _mapper;
 
-        public ProductsController(IProductRepository productRepository, ISupplierRepository supplierRepository, IMapper mapper)
+        public ProductsController(IProductRepository productRepository, IProductService productService, ISupplierRepository supplierRepository, IMapper mapper, INotificator notificator)
+            :base(notificator)
         {
             _productRepository = productRepository;
+            _productService = productService;
             _supplierRepository = supplierRepository;
             _mapper = mapper;
         }
@@ -65,8 +68,10 @@ namespace App.Controllers
 
             productViewModel.Image = imgPrefix + productViewModel.ImageUpload.FileName;
 
-            await _productRepository.Add(_mapper.Map<Product>(productViewModel));
-            
+            await _productService.Add(_mapper.Map<Product>(productViewModel));
+
+            if (!ValidOperation()) return View(productViewModel);
+
             return RedirectToAction("Index");
         }
 
@@ -115,7 +120,9 @@ namespace App.Controllers
             productUpdate.Price = productViewModel.Price;
             productUpdate.IsActive = productViewModel.IsActive;
 
-            await _productRepository.Update(_mapper.Map<Product>(productUpdate));
+            await _productService.Update(_mapper.Map<Product>(productUpdate));
+
+            if(!ValidOperation()) return View(productViewModel);
 
             return RedirectToAction(nameof(Index));
            
@@ -146,8 +153,12 @@ namespace App.Controllers
                 return NotFound();
             }
             DeleteFile(product.Image);
-            await _productRepository.Delete(id);
 
+            await _productService.Delete(id);
+
+            if(!ValidOperation()) return View(product);
+
+            TempData["Success"] = "Produto excluído com sucesso!";
 
             return RedirectToAction(nameof(Index));
         }

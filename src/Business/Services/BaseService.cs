@@ -1,19 +1,23 @@
-﻿using Business.Models;
+﻿using Business.Interfaces;
+using Business.Models;
+using Business.Notifications;
 using FluentValidation;
 using FluentValidation.Results;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Business.Services
 {
     public abstract class BaseService
     {
+        private readonly INotificator _notificator;
+
+        public BaseService(INotificator notificator)
+        {
+            _notificator = notificator;
+        }
+
         protected void Notify(string message)
         {
-
+            _notificator.Handle(new Notification(message));
         }
 
         protected void Notify(ValidationResult validationResult) {

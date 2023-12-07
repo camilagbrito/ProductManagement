@@ -1,11 +1,14 @@
-﻿using App.ViewModels;
+﻿using App.Extensions;
+using App.ViewModels;
 using AutoMapper;
 using Business.Interfaces;
 using Business.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace App.Controllers
 {
+    [Authorize]
     [Route("admin-products")]
     public class ProductsController : BaseController
     {
@@ -23,12 +26,14 @@ namespace App.Controllers
             _mapper = mapper;
         }
 
+        [AllowAnonymous]
         [Route("products-list")]
         public async Task<IActionResult> Index()
         {
             return View(_mapper.Map<IEnumerable<ProductViewModel>>(await _productRepository.GetProductsAndSuppliers()));
         }
 
+        [AllowAnonymous]
         [Route("product-details/{id:guid}")]
         public async Task<IActionResult> Details(Guid id)
         {
@@ -43,6 +48,7 @@ namespace App.Controllers
             return View(productViewModel);
         }
 
+        [ClaimsAuthorize("Product","Add")]
         [Route("new-product")]
         public async Task<IActionResult> Create()
         {
@@ -50,6 +56,7 @@ namespace App.Controllers
             return View(productViewModel);
         }
 
+        [ClaimsAuthorize("Product", "Add")]
         [Route("new-product")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -75,6 +82,7 @@ namespace App.Controllers
             return RedirectToAction("Index");
         }
 
+        [ClaimsAuthorize("Product", "Edit")]
         [Route("edit-product/{id:guid}")]
         public async Task<IActionResult> Edit(Guid id)
         {
@@ -88,6 +96,7 @@ namespace App.Controllers
             return View(productViewModel);
         }
 
+        [ClaimsAuthorize("Product", "Edit")]
         [Route("edit-product/{id:guid}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -128,6 +137,7 @@ namespace App.Controllers
            
         }
 
+        [ClaimsAuthorize("Product", "Delete")]
         [Route("delete-product/{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
@@ -141,6 +151,7 @@ namespace App.Controllers
             return View(product);
         }
 
+        [ClaimsAuthorize("Product", "Delete")]
         [Route("delete-product/{id:guid}")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

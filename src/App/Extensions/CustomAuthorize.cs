@@ -6,7 +6,7 @@ namespace App.Extensions
 {
     public class CustomAuthorization
     {
-        public static bool ValidarClaimsUsuario(HttpContext context, string claimName, string claimValue)
+        public static bool ValidateClaimsUser(HttpContext context, string claimName, string claimValue)
         {
             return context.User.Identity.IsAuthenticated &&
                    context.User.Claims.Any(c => c.Type == claimName && c.Value.Contains(claimValue));
@@ -39,7 +39,7 @@ namespace App.Extensions
                 return;
             }
 
-            if (!CustomAuthorization.ValidarClaimsUsuario(context.HttpContext, _claim.Type, _claim.Value))
+            if (!CustomAuthorization.ValidateClaimsUser(context.HttpContext, _claim.Type, _claim.Value))
             {
                 context.Result = new StatusCodeResult(403);
             }

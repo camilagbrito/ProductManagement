@@ -1,4 +1,6 @@
-﻿namespace App.Configurations
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace App.Configurations
 {
     public static class MvcConfig
     {
@@ -23,6 +25,8 @@
                 o.ModelBindingMessageProvider.SetValueIsInvalidAccessor(x => invalidValueMsg);
                 o.ModelBindingMessageProvider.SetValueMustBeANumberAccessor(x => beNumericMsg);
                 o.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(x => requiredValueMsg);
+
+                o.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
             });
 
             return services;
